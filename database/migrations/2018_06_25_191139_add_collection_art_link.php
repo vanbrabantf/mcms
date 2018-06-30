@@ -14,7 +14,7 @@ class AddCollectionArtLink extends Migration
     public function up()
     {
         Schema::table('collections', function (Blueprint $table): void {
-            $table->uuid('art_id');
+            $table->uuid('art_id')->nullable();
             $table->foreign('art_id')->references('id')->on('art');
         });
     }

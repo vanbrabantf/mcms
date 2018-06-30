@@ -13,10 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->group(function () {
+    Route::get('users/me', function () {
+        return json_encode(['hello' => 'govnar']);
+    });
 
-Route::get('users/me', function () {
-    return json_encode(['hello' => 'govnar']);
+    Route::resource('art', 'ArtController');
 });

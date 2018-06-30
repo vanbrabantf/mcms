@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCommentArtLink extends Migration
+class MakeArtImageNullable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddCommentArtLink extends Migration
      */
     public function up()
     {
-        Schema::table('comments', function (Blueprint $table): void {
-            $table->uuid('art_id')->nullable();
-            $table->foreign('art_id')->references('id')->on('art');
+        Schema::table('art', function (Blueprint $table): void {
+            $table->string('image')->nullable()->change();
         });
     }
 
@@ -26,8 +25,6 @@ class AddCommentArtLink extends Migration
      */
     public function down()
     {
-        Schema::table('comments', function (Blueprint $table): void {
-            $table->dropColumn(['art_id']);
-        });
+        //
     }
 }
