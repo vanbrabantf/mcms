@@ -24,7 +24,6 @@ class Art extends Model
         'name',
         'image',
         'description',
-        'tags',
     ];
 
     /**
