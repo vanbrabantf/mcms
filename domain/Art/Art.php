@@ -2,6 +2,7 @@
 
 namespace Domain;
 
+use Domain\Art\ArtId;
 use Domain\Core\ValueObjects\UuidModel;
 use Domain\Entities\Collection;
 use Domain\Entities\Comment;
@@ -40,5 +41,10 @@ class Art extends Model
     public function collection(): HasOne
     {
         return $this->hasOne(Collection::class);
+    }
+
+    public function getId(): ArtId
+    {
+        return new ArtId($this->id);
     }
 }
