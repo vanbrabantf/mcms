@@ -3,6 +3,7 @@
 namespace Application\Art;
 
 use Domain\Art;
+use Domain\Art\ArtId;
 use Domain\Art\ArtRepository as ArtRepositoryInterface;
 
 class ArtRepository implements ArtRepositoryInterface
@@ -14,5 +15,20 @@ class ArtRepository implements ArtRepositoryInterface
            'description' => $description,
            'image' => $imagePath,
         ]);
+    }
+
+    public function update(
+        String $name,
+        String $description,
+        String $imagePath = null,
+        ArtId $artId
+    ): void
+    {
+        Art::where('id', $artId)
+            ->update([
+                'name' => $name,
+                'description' => $description,
+                'image' => $imagePath,
+            ]);
     }
 }
