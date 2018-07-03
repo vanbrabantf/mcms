@@ -3,9 +3,12 @@
 namespace Infrastructure\Http\Controllers;
 
 use Application\Art\Jobs\CreateNewArt;
+use Application\Art\Jobs\UpdateArt;
+use Domain\Art\ArtId;
+use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Infrastructure\requests\CreateArtRequest;
+use Infrastructure\requests\UpdateArtRequest;
 use League\Tactician\CommandBus;
 
 class ArtController extends Controller
@@ -62,13 +65,26 @@ class ArtController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param UpdateArtRequest $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateArtRequest $request, $id)
     {
-        //
+        try {
+            $updateCommand = new UpdateArt(
+                $request->name,
+                $request->description,
+                null,
+                new ArtId($id)
+            );
+
+            $this->commandBus->handle($updateCommand);
+
+            return response([], JsonResponse::HTTP_OK);
+        } catch (Exception $e) {
+            $this->returnBadParameterError($e->getMessage());
+        }
     }
 
     /**
